@@ -6,7 +6,7 @@
 /*   By: aarranz- <aarranz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:34:49 by aarranz-          #+#    #+#             */
-/*   Updated: 2023/06/14 14:12:53 by aarranz-         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:45:16 by aarranz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,19 @@ size_t	ft_strlen_line(const char *str)
 	i = 0;
 	while (str[i] != '\n' || (str[i] == '\0'))
 		i++;
-	return (i + 1);
+	if (str[i] == '\n')
+		i++;
+	return (i);
+}
+
+void	strfree(char *buff, char *temp, char *line)
+{
+	buff = NULL;
+	free(buff);
+	temp = NULL;
+	free(temp);
+	line = NULL;
+	free(line);
 }
 
 char	*get_next_line(int fd)
@@ -60,9 +72,11 @@ char	*get_next_line(int fd)
 	size_t			r;
 	static char		*temp = "";
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	line = ft_strdup("");
 	buff = malloc(sizeof(char) * (BUFFER_SIZE));
-	while (temp[0] != '\0' || r != 0)
+	while (temp)
 	{
 		r = read (fd, buff, BUFFER_SIZE);
 		temp = ft_strjoin(temp, buff);
@@ -71,19 +85,15 @@ char	*get_next_line(int fd)
 			line = ft_substr(temp, 0, ft_strlen_line(temp));
 			temp = ft_strdup(ft_substr(temp, ft_strlen_line(temp), \
 			ft_strlen(temp) - ft_strlen_line(temp)));
-			buff = NULL;
-			free(buff);
+			strfree(buff, temp, line);
 			return (line);
 		}
 	}
-	temp = NULL;
-	line = NULL;
-	free(line);
-	free(temp);
+	strfree(buff, temp, line);
 	return (NULL);
 }
 
-/*int	main(void)
+/* int	main(void)
 {
 	int	fd;
 
@@ -107,4 +117,4 @@ char	*get_next_line(int fd)
 	printf("%s", get_next_line(fd));
 	printf("------\n");
 	close(fd);
-}*/
+} */

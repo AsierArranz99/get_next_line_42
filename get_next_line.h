@@ -6,7 +6,7 @@
 /*   By: aarranz- <aarranz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 11:51:22 by aarranz-          #+#    #+#             */
-/*   Updated: 2023/06/14 12:05:16 by aarranz-         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:38:58 by aarranz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2000
+#  define BUFFER_SIZE 1000
 # endif
 
 char	*get_next_line(int fd);
